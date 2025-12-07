@@ -1,80 +1,38 @@
+"use client";
+
 import Link from "next/link";
-import { Calendar, Clock, ArrowRight, User } from "lucide-react";
+import { Calendar, Clock, ArrowRight, User, Image as ImageIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-
-const blogPosts = [
-  {
-    id: 1,
-    slug: "complete-guide-studying-australia-2024",
-    title: "Complete Guide to Studying in Australia 2024",
-    excerpt: "Everything you need to know about studying in Australia - from visa requirements to cost of living and top universities.",
-    category: "Study Guide",
-    author: "Brainstorm Team",
-    date: "December 5, 2024",
-    readTime: "8 min read",
-    image: "https://images.unsplash.com/photo-1523482580672-f109ba8cb9be?w=600&h=400&fit=crop",
-  },
-  {
-    id: 2,
-    slug: "ielts-vs-pte-which-test-right-for-you",
-    title: "IELTS vs PTE: Which English Test is Right for You?",
-    excerpt: "A comprehensive comparison of IELTS and PTE to help you decide which English proficiency test suits your needs.",
-    category: "Test Prep",
-    author: "Brainstorm Team",
-    date: "December 3, 2024",
-    readTime: "6 min read",
-    image: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&h=400&fit=crop",
-  },
-  {
-    id: 3,
-    slug: "top-scholarships-nepali-students-2024",
-    title: "Top Scholarships for Nepali Students in 2024",
-    excerpt: "Discover the best scholarship opportunities available for Nepali students planning to study abroad.",
-    category: "Scholarships",
-    author: "Brainstorm Team",
-    date: "November 28, 2024",
-    readTime: "10 min read",
-    image: "https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=600&h=400&fit=crop",
-  },
-  {
-    id: 4,
-    slug: "student-visa-interview-tips",
-    title: "How to Ace Your Student Visa Interview",
-    excerpt: "Expert tips and common questions to help you prepare for your student visa interview.",
-    category: "Visa Guide",
-    author: "Brainstorm Team",
-    date: "November 25, 2024",
-    readTime: "7 min read",
-    image: "https://images.unsplash.com/photo-1521791136064-7986c2920216?w=600&h=400&fit=crop",
-  },
-  {
-    id: 5,
-    slug: "cost-of-living-uk-students",
-    title: "Cost of Living in the UK for International Students",
-    excerpt: "A detailed breakdown of living expenses in the UK to help you budget for your studies.",
-    category: "Study Guide",
-    author: "Brainstorm Team",
-    date: "November 20, 2024",
-    readTime: "9 min read",
-    image: "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=600&h=400&fit=crop",
-  },
-  {
-    id: 6,
-    slug: "canada-post-study-work-permit",
-    title: "Canada Post-Study Work Permit: Complete Guide",
-    excerpt: "Learn about Canada's PGWP program and how to extend your stay after graduation.",
-    category: "Immigration",
-    author: "Brainstorm Team",
-    date: "November 15, 2024",
-    readTime: "8 min read",
-    image: "https://images.unsplash.com/photo-1517935706615-2717063c2225?w=600&h=400&fit=crop",
-  },
-];
+import { BlogAuthor } from "@/types/blog";
+import { useBlogs } from "@/hooks/use-blog";
+import { Skeleton } from "@/components/ui/skeleton";
+import { truncateText, stripHtml } from "@/lib/text-utils";
+import { format } from "date-fns";
 
 const categories = ["All", "Study Guide", "Test Prep", "Scholarships", "Visa Guide", "Immigration"];
 
 const Blog = () => {
+  const { data: blogData, isLoading } = useBlogs();
+  const blogs = blogData?.results || [];
+
+  const featuredPost = blogs.length > 0 ? blogs[0] : null;
+  const otherPosts = blogs.length > 1 ? blogs.slice(1) : [];
+
+  const formatDate = (dateString: string) => {
+    try {
+      return format(new Date(dateString), "MMMM d, yyyy");
+    } catch (error) {
+      console.error("Error formatting date:", error);
+      return dateString;
+    }
+  };
+
+  const getAuthorName = (author: BlogAuthor | null) => {
+    if (!author) return "Brainstorm Team";
+    return `${author.first_name} ${author.last_name}`.trim() || author.username || "Brainstorm Team";
+  };
+
   return (
     <>
       {/* Hero Section */}
@@ -118,47 +76,78 @@ const Blog = () => {
       {/* Featured Post */}
       <section className="py-12 md:py-16 bg-background">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <div className="grid lg:grid-cols-2 gap-8 items-center">
-            <div className="relative overflow-hidden rounded-lg">
-              <Image
-                src={blogPosts[0].image}
-                alt={blogPosts[0].title}
-                width={600}
-                height={400}
-                className="w-full h-64 lg:h-80 object-cover"
-              />
-              <span className="absolute top-4 left-4 bg-primary text-primary-foreground px-3 py-1 text-xs font-medium rounded">
-                Featured
-              </span>
+          {isLoading ? (
+            <div className="grid lg:grid-cols-2 gap-8 items-center">
+              <Skeleton className="w-full h-64 lg:h-80 rounded-lg" />
+              <div className="space-y-4">
+                <Skeleton className="h-6 w-24 rounded-full" />
+                <Skeleton className="h-10 w-3/4" />
+                <Skeleton className="h-20 w-full" />
+                <div className="flex gap-4">
+                  <Skeleton className="h-4 w-24" />
+                  <Skeleton className="h-4 w-24" />
+                  <Skeleton className="h-4 w-24" />
+                </div>
+                <Skeleton className="h-10 w-32" />
+              </div>
             </div>
-            <div>
-              <span className="inline-block text-secondary-foreground px-3 py-1 text-xs font-medium rounded mb-4">
-                {blogPosts[0].category}
-              </span>
-              <h2 className="text-2xl md:text-3xl font-bold mb-4">
-                {blogPosts[0].title}
-              </h2>
-              <p className="text-muted-foreground mb-6">
-                {blogPosts[0].excerpt}
-              </p>
-              <div className="flex items-center gap-4 text-sm text-muted-foreground mb-6">
-                <span className="flex items-center gap-1">
-                  <User className="w-4 h-4" /> {blogPosts[0].author}
-                </span>
-                <span className="flex items-center gap-1">
-                  <Calendar className="w-4 h-4" /> {blogPosts[0].date}
-                </span>
-                <span className="flex items-center gap-1">
-                  <Clock className="w-4 h-4" /> {blogPosts[0].readTime}
+          ) : featuredPost ? (
+            <div className="grid lg:grid-cols-2 gap-8 items-center">
+              <div className="relative overflow-hidden rounded-lg bg-muted">
+                {featuredPost.thumbnail_image ? (
+                  <Image
+                    src={featuredPost.thumbnail_image}
+                    alt={featuredPost.thumbnail_image_alt_description || featuredPost.title}
+                    width={600}
+                    height={400}
+                    className="w-full h-64 lg:h-80 object-cover"
+                  />
+                ) : (
+                   <div className="w-full h-64 lg:h-80 flex items-center justify-center bg-secondary/20">
+                    <ImageIcon className="w-16 h-16 text-muted-foreground" />
+                   </div>
+                )}
+                <span className="absolute top-4 left-4 bg-primary text-primary-foreground px-3 py-1 text-xs font-medium rounded">
+                  Featured
                 </span>
               </div>
-              <Button asChild>
-                <Link href={`/blog/${blogPosts[0].slug}`}>
-                  Read Article <ArrowRight className="ml-2 w-4 h-4" />
-                </Link>
-              </Button>
+              <div>
+                {featuredPost.tags && featuredPost.tags.length > 0 && (
+                  <span className="inline-block text-secondary-foreground px-3 py-1 text-xs font-medium rounded mb-4 bg-secondary">
+                    {featuredPost.tags[0].name}
+                  </span>
+                )}
+                <h2 className="text-2xl md:text-3xl font-bold mb-4 line-clamp-2">
+                  {featuredPost.title}
+                </h2>
+                <p className="text-muted-foreground mb-6 line-clamp-3">
+                  {featuredPost.meta_description || truncateText(stripHtml(featuredPost.content), 150)}
+                </p>
+                <div className="flex items-center gap-4 text-sm text-muted-foreground mb-6">
+                  <span className="flex items-center gap-1">
+                    <User className="w-4 h-4" /> {getAuthorName(featuredPost.author)}
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <Calendar className="w-4 h-4" /> {formatDate(featuredPost.created_at)}
+                  </span>
+                  {featuredPost.time_to_read && (
+                    <span className="flex items-center gap-1">
+                      <Clock className="w-4 h-4" /> {featuredPost.time_to_read}
+                    </span>
+                  )}
+                </div>
+                <Button asChild>
+                  <Link href={`/blog/${featuredPost.slug}`}>
+                    Read Article <ArrowRight className="ml-2 w-4 h-4" />
+                  </Link>
+                </Button>
+              </div>
             </div>
-          </div>
+          ) : (
+            <div className="text-center py-12 text-muted-foreground">
+              No blog posts found.
+            </div>
+          )}
         </div>
       </section>
 
@@ -166,45 +155,79 @@ const Blog = () => {
       <section className="py-12 md:py-16 ">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <h2 className="text-2xl font-bold mb-8">Latest Articles</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {blogPosts.slice(1).map((post) => (
-              <article
-                key={post.id}
-                className="bg-card border border-border rounded-lg overflow-hidden group hover:shadow-md transition-all"
-              >
-                <div className="relative overflow-hidden">
-                  <Image
-                    src={post.image}
-                    alt={post.title}
-                    width={600}
-                    height={400}
-                    className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
-                  />
-                  <span className="absolute top-3 left-3 bg-background/90 backdrop-blur-sm text-foreground px-2 py-1 text-xs font-medium rounded">
-                    {post.category}
-                  </span>
-                </div>
-                <div className="p-5">
-                  <h3 className="font-bold text-lg mb-2 line-clamp-2 group-hover:text-primary transition-colors">
-                    {post.title}
-                  </h3>
-                  <p className="text-muted-foreground text-sm mb-4 line-clamp-2">
-                    {post.excerpt}
-                  </p>
-                  <div className="flex items-center justify-between text-xs text-muted-foreground">
-                    <span className="flex items-center gap-1">
-                      <Calendar className="w-3 h-3" /> {post.date}
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <Clock className="w-3 h-3" /> {post.readTime}
-                    </span>
+          {isLoading ? (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+               {[...Array(3)].map((_, i) => (
+                 <div key={i} className="bg-card border border-border rounded-lg overflow-hidden h-full">
+                   <Skeleton className="w-full h-48" />
+                   <div className="p-5 space-y-3">
+                     <Skeleton className="h-6 w-3/4" />
+                     <Skeleton className="h-4 w-full" />
+                     <Skeleton className="h-4 w-5/6" />
+                     <div className="flex justify-between pt-2">
+                       <Skeleton className="h-3 w-1/4" />
+                       <Skeleton className="h-3 w-1/4" />
+                     </div>
+                   </div>
+                 </div>
+               ))}
+            </div>
+          ) : otherPosts.length > 0 ? (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {otherPosts.map((post) => (
+                <article
+                  key={post.id}
+                  className="bg-card border border-border rounded-lg overflow-hidden group hover:shadow-md transition-all flex flex-col h-full"
+                >
+                  <div className="relative overflow-hidden bg-muted h-48">
+                    {post.thumbnail_image ? (
+                        <Image
+                        src={post.thumbnail_image}
+                        alt={post.thumbnail_image_alt_description || post.title}
+                        fill
+                        className="object-cover transition-transform duration-300 group-hover:scale-105"
+                      />
+                    ) : (
+                        <div className="w-full h-full flex items-center justify-center bg-secondary/20">
+                            <ImageIcon className="w-10 h-10 text-muted-foreground" />
+                        </div>
+                    )}
+                    
+                    {post.tags && post.tags.length > 0 && (
+                      <span className="absolute top-3 left-3 bg-background/90 backdrop-blur-sm text-foreground px-2 py-1 text-xs font-medium rounded">
+                        {post.tags[0].name}
+                      </span>
+                    )}
                   </div>
-                </div>
-              </article>
-            ))}
-          </div>
+                  <div className="p-5 flex flex-col grow">
+                    <h3 className="font-bold text-lg mb-2 line-clamp-2 group-hover:text-primary transition-colors" title={post.title}>
+                      {post.title}
+                    </h3>
+                    <p className="text-muted-foreground text-sm mb-4 line-clamp-2 grow">
+                      {post.meta_description || truncateText(stripHtml(post.content), 100)}
+                    </p>
+                    <div className="flex items-center justify-between text-xs text-muted-foreground mt-auto">
+                      <span className="flex items-center gap-1">
+                        <Calendar className="w-3 h-3" /> {formatDate(post.created_at)}
+                      </span>
+                      {post.time_to_read && (
+                        <span className="flex items-center gap-1">
+                          <Clock className="w-3 h-3" /> {post.time_to_read}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          ) : !featuredPost && !isLoading ? (
+             <div className="text-center py-12 text-muted-foreground">
+              No recent articles found.
+            </div>
+          ) : null}
 
           {/* Load More */}
+          {/* TODO: Implement pagination load more */}
           <div className="text-center mt-12">
             <Button variant="outline" size="lg">
               Load More Articles
@@ -235,8 +258,8 @@ const Blog = () => {
           </div>
         </div>
       </section>
-      </>
-    );
+    </>
+  );
 };
 
 export default Blog;

@@ -6,22 +6,39 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Phone, Mail, MapPin, Clock, Send } from "lucide-react";
-import { useState } from "react";
-import { toast } from "sonner";
+import { useSubmitContactForm } from "@/hooks/use-contact";
+import { ContactFormData } from "@/types/contact";
 
 const Contact = () => {
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { mutate: submitContact, isPending } = useSubmitContactForm();
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsSubmitting(true);
-    
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    toast.success("Thank you! We'll contact you within 24 hours.");
-    setIsSubmitting(false);
-    (e.target as HTMLFormElement).reset();
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    const firstName = formData.get("firstName") as string;
+    const lastName = formData.get("lastName") as string;
+    const email = formData.get("email") as string;
+    const phone = formData.get("phone") as string;
+    const destination = formData.get("destination") as string;
+    const education = formData.get("education") as string;
+    const message = formData.get("message") as string;
+
+    const fullMessage = `${message}\n\nAdditional Details:\nPreferred Destination: ${destination || 'Not Answered'}\nCurrent Education Level: ${education || 'Not Answered'}`;
+
+    const submissionData: ContactFormData = {
+      name: `${firstName} ${lastName}`.trim(),
+      email: email,
+      phone_number: phone,
+      message: fullMessage,
+    };
+
+    submitContact(submissionData, {
+      onSuccess: () => {
+        form.reset();
+      },
+    });
   };
 
   return (
@@ -54,28 +71,28 @@ const Contact = () => {
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid md:grid-cols-2 gap-6">
                     <div className="space-y-2">
-                      <Label htmlFor="firstName">First Name *</Label>
-                      <Input id="firstName" required placeholder="Your first name" className="border-2" />
+                       <Label htmlFor="firstName">First Name *</Label>
+                      <Input id="firstName" name="firstName" required placeholder="Your first name" className="border-2" />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="lastName">Last Name *</Label>
-                      <Input id="lastName" required placeholder="Your last name" className="border-2" />
+                      <Input id="lastName" name="lastName" required placeholder="Your last name" className="border-2" />
                     </div>
                   </div>
                   <div className="grid md:grid-cols-2 gap-6">
                     <div className="space-y-2">
                       <Label htmlFor="email">Email Address *</Label>
-                      <Input id="email" type="email" required placeholder="your@email.com" className="border-2" />
+                      <Input id="email" name="email" type="email" required placeholder="your@email.com" className="border-2" />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="phone">Phone Number *</Label>
-                      <Input id="phone" type="tel" required placeholder="+977 98XXXXXXXX" className="border-2" />
+                      <Input id="phone" name="phone" type="tel" required placeholder="+977 98XXXXXXXX" className="border-2" />
                     </div>
                   </div>
                   <div className="grid md:grid-cols-2 gap-6">
                     <div className="space-y-2">
                       <Label htmlFor="destination">Preferred Destination</Label>
-                      <Select>
+                      <Select name="destination">
                         <SelectTrigger className="border-2">
                           <SelectValue placeholder="Select a country" />
                         </SelectTrigger>
@@ -91,7 +108,7 @@ const Contact = () => {
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="education">Current Education Level</Label>
-                      <Select>
+                      <Select name="education">
                         <SelectTrigger className="border-2">
                           <SelectValue placeholder="Select level" />
                         </SelectTrigger>
@@ -108,13 +125,14 @@ const Contact = () => {
                     <Label htmlFor="message">Your Message</Label>
                     <Textarea 
                       id="message" 
+                      name="message"
                       placeholder="Tell us about your study abroad goals..."
                       rows={4}
                       className="border-2"
                     />
                   </div>
-                  <Button type="submit" size="lg" disabled={isSubmitting} className="w-full md:w-auto shadow-sm">
-                    {isSubmitting ? (
+                  <Button type="submit" size="lg" disabled={isPending} className="w-full md:w-auto shadow-sm">
+                    {isPending ? (
                       "Sending..."
                     ) : (
                       <>

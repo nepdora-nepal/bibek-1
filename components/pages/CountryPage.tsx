@@ -479,7 +479,7 @@ const CountryPage = () => {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative h-[60vh] min-h-[500px] overflow-hidden rounded-b-2xl">
+      <section className="relative h-[60vh] min-h-[500px] overflow-hidden ">
         <Image
           src={data.image}
           alt={`Study in ${data.name}`}

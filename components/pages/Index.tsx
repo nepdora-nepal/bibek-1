@@ -5,7 +5,7 @@ import CountriesSection from "@/components/home/CountriesSection";
 import WhyChooseUsSection from "@/components/home/WhyChooseUsSection";
 import ServicesSection from "@/components/home/ServicesSection";
 import TestimonialsSection from "@/components/home/TestimonialsSection";
-import VideoFeedSection from "@/components/home/VideoFeedSection";
+import Videos from "@/components/home/videos/videos";
 import CTASection from "@/components/home/CTASection";
 
 const Index = () => {
@@ -18,7 +18,7 @@ const Index = () => {
       <WhyChooseUsSection />
       <ServicesSection />
       <TestimonialsSection />
-      <VideoFeedSection />
+      <Videos />
       <CTASection />
     </>
   );

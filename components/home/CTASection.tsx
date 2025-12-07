@@ -30,7 +30,7 @@ const CTASection = () => {
             </div>
           </div>
 
-          <Card className="bg-primary-foreground/10 border-2 border-primary-foreground/30 border-none shadow-none">
+          <Card className="bg-primary-foreground/10 text-white border-2 border-primary-foreground/30 border-none shadow-none">
             <CardHeader>
               <CardTitle className="text-xl">Visit Our Office</CardTitle>
             </CardHeader>

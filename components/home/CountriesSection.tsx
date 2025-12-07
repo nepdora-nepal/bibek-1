@@ -52,9 +52,9 @@ const CountriesSection = () => {
     <section className="py-16 md:py-24 bg-background">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="text-center mb-12 md:mb-16">
-          <span className="inline-block bg-gray-100 text-gray-900 px-4 py-1 text-sm font-medium mb-4">
-            Study Destinations
-          </span>
+        <Badge variant="outline" className="text-sm font-semibold text-primary tracking-wider uppercase mb-3 border-primary/20">
+              Study Destinations
+            </Badge>
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
             Choose Your Dream Destination
           </h2>

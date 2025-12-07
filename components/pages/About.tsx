@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { 
@@ -5,33 +7,9 @@ import {
   GraduationCap, Globe, ArrowRight 
 } from "lucide-react";
 import Image from "next/image";
-
-const teamMembers = [
-  {
-    name: "Rajesh Sharma",
-    role: "Founder & CEO",
-    image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Rajesh",
-    experience: "15+ years in education",
-  },
-  {
-    name: "Sunita Poudel",
-    role: "Head of Counseling",
-    image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Sunita",
-    experience: "10+ years experience",
-  },
-  {
-    name: "Kiran Basnet",
-    role: "Visa Specialist",
-    image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Kiran",
-    experience: "8+ years experience",
-  },
-  {
-    name: "Maya Tamang",
-    role: "IELTS Trainer",
-    image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Maya",
-    experience: "12+ years teaching",
-  },
-];
+import { useTeamMembers } from "@/hooks/use-team-member";
+import { Skeleton } from "@/components/ui/skeleton";
+import { stripHtml, truncateText } from "@/lib/text-utils";
 
 const values = [
   {
@@ -57,11 +35,13 @@ const values = [
 ];
 
 const About = () => {
+  const { data: teamMembers, isLoading } = useTeamMembers();
+
   return (
     <>
       {/* Hero Section */}
       <section className=" py-16 md:py-24">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+        <div className="max-w-6xl mx-auto px-2 sm:px-6">
           <div className="max-w-3xl">
             <span className="inline-block bg-accent text-accent-foreground px-4 py-1 text-sm font-medium mb-4">
               About Us
@@ -83,7 +63,7 @@ const About = () => {
       </section>
 
       {/* Mission & Vision */}
-      <section className="py-16 md:py-24 bg-background">
+      <section className="py-10 md:py-24 bg-background">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="grid md:grid-cols-2 gap-8">
             <div className="bg-card border-2 border-border p-8 rounded-lg">
@@ -113,7 +93,7 @@ const About = () => {
       </section>
 
       {/* Our Story */}
-      <section className="py-16 md:py-24">
+      <section className="py-10 md:py-24">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
@@ -163,7 +143,7 @@ const About = () => {
       </section>
 
       {/* Our Values */}
-      <section className="py-16 md:py-24 bg-background">
+      <section className="py-10 md:py-24 bg-background">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-12">
             <span className="inline-block bg-gray-100 text-gray-900 px-4 py-1 text-sm font-medium mb-4">
@@ -186,7 +166,7 @@ const About = () => {
       </section>
 
       {/* Team Section */}
-      <section className="py-16 md:py-24 ">
+      <section className="py-10 md:py-24 ">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-12">
             <span className="inline-block bg-accent text-accent-foreground px-4 py-1 text-sm font-medium mb-4">
@@ -198,30 +178,51 @@ const About = () => {
             </p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 ">
-            {teamMembers.map((member, index) => (
-              <div key={index} className="bg-card border-2 border-border overflow-hidden group rounded-lg">
-                <div className="aspect-square  p-8">
-                  <Image
-                    src={member.image}
-                    alt={member.name}
-                    width={200}
-                    height={200}
-                    className="w-full h-full object-contain"
-                  />
+            {isLoading ? (
+              [...Array(4)].map((_, index) => (
+                <div key={index} className="bg-card border-2 border-border overflow-hidden rounded-lg">
+                  <div className="aspect-square p-8">
+                    <Skeleton className="w-full h-full rounded-full" />
+                  </div>
+                  <div className="p-4 text-center space-y-2">
+                    <Skeleton className="h-6 w-3/4 mx-auto" />
+                    <Skeleton className="h-4 w-1/2 mx-auto" />
+                    <Skeleton className="h-3 w-5/6 mx-auto" />
+                  </div>
                 </div>
-                <div className="p-4 text-center">
-                  <h3 className="font-bold text-lg">{member.name}</h3>
-                  <p className="text-primary text-sm font-medium">{member.role}</p>
-                  <p className="text-xs text-muted-foreground mt-1">{member.experience}</p>
+              ))
+            ) : (
+              (teamMembers || []).map((member) => (
+                <div key={member.id} className="bg-card border-2 border-border overflow-hidden group rounded-lg">
+                  <div className="aspect-square p-8">
+                    {member.photo ? (
+                      <Image
+                        src={member.photo}
+                        alt={member.name}
+                        width={300}
+                        height={300}
+                        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                      />
+                    ) : (
+                      <div className="w-full h-full rounded-full bg-secondary flex items-center justify-center text-4xl font-bold text-secondary-foreground">
+                        {member.name.charAt(0)}
+                      </div>
+                    )}
+                  </div>
+                  <div className="p-4 text-center">
+                    <h3 className="font-bold text-lg">{member.name}</h3>
+                    <p className="text-primary text-sm font-medium">{member.role}</p>
+                    <p className="text-xs text-muted-foreground mt-1 line-clamp-2" title={stripHtml(member.about)}>
+                      {truncateText(stripHtml(member.about), 60)}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))
+            )}
           </div>
         </div>
       </section>
-
-
-      </>
+    </>
   );
 };
 
