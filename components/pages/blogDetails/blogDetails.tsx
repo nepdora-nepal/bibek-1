@@ -8,6 +8,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AlertCircle, CalendarDays, User, Clock, Tag } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { format } from "date-fns";
+import { sanitizeContent } from "@/utils/html-sanitizer";
 
 interface BlogDetailProps {
   slug: string;
@@ -119,7 +120,7 @@ export const BlogDetail: React.FC<BlogDetailProps> = ({ slug }) => {
 
             <div
               className="prose prose-lg dark:prose-invert max-w-none"
-              dangerouslySetInnerHTML={{ __html: blog.content }}
+              dangerouslySetInnerHTML={{ __html: sanitizeContent(blog.content) }}
             />
 
             {blog.tags && blog.tags.length > 0 && (
@@ -137,7 +138,7 @@ export const BlogDetail: React.FC<BlogDetailProps> = ({ slug }) => {
 
           {/* Sidebar for related content */}
           <div className="space-y-8 md:col-span-1">
-            <div className="bg-muted/50 rounded-lg p-6">
+            {/* <div className="bg-muted/50 rounded-lg p-6">
               <h3 className="text-foreground mb-4 text-lg font-semibold">
                 About the Author
               </h3>
@@ -164,7 +165,7 @@ export const BlogDetail: React.FC<BlogDetailProps> = ({ slug }) => {
                   Author information not available.
                 </p>
               )}
-            </div>
+            </div> */}
 
             {recentBlogs.length > 0 && (
               <div className="bg-muted/50 rounded-lg p-6">
