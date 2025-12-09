@@ -1,10 +1,9 @@
-"use client";
-
+import type { Metadata } from "next";
 import Script from "next/script";
 import CountryPage from "@/components/pages/CountryPage";
-import { useParams } from "next/navigation";
 
-// Country data for SEO
+// Country data for SEO - Duplicate of what's in CountryPage temporarily or can be imported if shared.
+// Ideally should be shared, but for now defining here to fix the metadata issue quickly.
 const countryMeta: Record<
   string,
   { name: string; fullName: string; tagline: string }
@@ -36,9 +35,36 @@ const countryMeta: Record<
   },
 };
 
-export default function Country() {
-  const params = useParams<{ country: string }>();
-  const country = params?.country || "";
+type Props = {
+  params: Promise<{ country: string }>;
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { country } = await params;
+  const data = countryMeta[country];
+
+  if (!data) {
+    return {
+      title: "Country Not Found — Brainstorm Global Education",
+    };
+  }
+
+  return {
+    title: `Study in ${data.name} — Brainstorm Global Education`,
+    description: `${data.tagline}. Complete guide to studying in ${data.fullName} for Nepali students.`,
+    openGraph: {
+      title: `Study in ${data.name} — Brainstorm Global Education`,
+      description: `${data.tagline}. Complete guide to studying in ${data.fullName} for Nepali students.`,
+      url: `https://brainstorm-global-education.vercel.app/countries/${country}`,
+    },
+    alternates: {
+      canonical: `https://brainstorm-global-education.vercel.app/countries/${country}`,
+    },
+  };
+}
+
+export default async function Country({ params }: Props) {
+  const { country } = await params;
   const data = countryMeta[country];
 
   const countrySchema = data
@@ -69,7 +95,7 @@ export default function Country() {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(countrySchema) }}
         />
       )}
-      <CountryPage />
+      <CountryPage countrySlug={country} />
     </>
   );
 }

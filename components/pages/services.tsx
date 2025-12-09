@@ -134,7 +134,7 @@ const ServiceExplorer = ({ excludeSlug }: { excludeSlug?: string }) => {
                     <h3 className="text-xl font-bold text-gray-900 mb-4">
                       {service.title}
                     </h3>
-                    <p className="text-sm text-gray-500 mb-8 leading-relaxed flex-grow">
+                    <p className="text-sm text-gray-500 mb-8 leading-relaxed grow">
                       {plainDescription}
                     </p>
 

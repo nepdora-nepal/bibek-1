@@ -471,8 +471,10 @@ const countryData: Record<string, {
   },
 };
 
-const CountryPage = () => {
-  const { country } = useParams<{ country: string }>();
+const CountryPage = ({ countrySlug }: { countrySlug?: string }) => {
+  const params = useParams<{ country: string }>();
+  // Prioritize prop if available (Server Component usage), fallback to params (Client Component usage just in case)
+  const country = countrySlug || params?.country;
   const data = country ? countryData[country] : null;
 
   if (!data) {
