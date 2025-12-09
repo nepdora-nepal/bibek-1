@@ -53,9 +53,10 @@ const ServiceHero = () => {
   );
 };
 
-const ServiceExplorer = () => {
+const ServiceExplorer = ({ excludeSlug }: { excludeSlug?: string }) => {
   const { data: servicesData, isLoading } = useServices();
-  const services = servicesData?.results ?? [];
+  const services =
+    servicesData?.results.filter((s) => s.slug !== excludeSlug) ?? [];
 
   return (
     <section className="py-20 bg-white">
@@ -154,11 +155,11 @@ const ServiceExplorer = () => {
   );
 };
 
-export const Services = () => {
+export const Services = ({ excludeSlug }: { excludeSlug?: string }) => {
   return (
     <main>
       <ServiceHero />
-      <ServiceExplorer />
+      <ServiceExplorer excludeSlug={excludeSlug} />
     </main>
   );
 };

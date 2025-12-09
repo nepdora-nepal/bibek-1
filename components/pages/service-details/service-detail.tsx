@@ -253,7 +253,7 @@ export default function ServiceDetailView({ slug }: { slug: string }) {
 
       {/* Explore More Services */}
       <div className="bg-gray-50">
-        <Services />
+        <Services excludeSlug={service.slug} />
       </div>
     </div>
   );
