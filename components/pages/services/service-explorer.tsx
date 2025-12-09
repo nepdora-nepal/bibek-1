@@ -1,31 +1,34 @@
 "use client";
 
 import { useServices } from "@/hooks/use-services";
-import { Card, CardHeader, CardTitle, CardContent, CardDescription } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+  CardDescription,
+} from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import Image from "next/image";
 import Link from "next/link";
-import { FileCheck } from "lucide-react";
+import { FileCheck, ArrowRight } from "lucide-react";
 import { truncateText, stripHtml } from "@/lib/text-utils";
+import { Button } from "@/components/ui/button";
 
-const ServicesSection = () => {
+export const ServiceExplorer = () => {
   const { data: servicesData, isLoading } = useServices();
   const services = servicesData?.results || [];
 
   return (
-    <section id="services" className=" md:py-8">
+    <section className="py-16 md:py-24">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="text-center mb-12 md:mb-16">
-          <Badge variant="secondary" className="px-4 py-1 text-sm font-medium mb-4 bg-accent text-accent-foreground">
-            Our Services
-          </Badge>
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Complete Support at Every Step
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900">
+            Explore More Services
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            From your first consultation to landing in your dream destination, 
-            we provide comprehensive guidance throughout your study abroad journey.
+          <p className="text-gray-500 max-w-2xl mx-auto">
+            Discover our comprehensive range of services designed to support
+            your journey every step of the way.
           </p>
         </div>
 
@@ -48,15 +51,16 @@ const ServicesSection = () => {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {services.map((service) => (
               <Link href={`/services/${service.slug}`} key={service.id}>
-                <Card
-                  className="transition-all duration-300 hover:shadow-md hover:-translate-y-1 h-full cursor-pointer"
-                >
+                <Card className="transition-all duration-300 hover:shadow-md hover:-translate-y-1 h-full group cursor-pointer">
                   <CardHeader>
                     <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4 overflow-hidden relative">
                       {service.thumbnail_image ? (
-                        <Image 
-                          src={service.thumbnail_image} 
-                          alt={service.thumbnail_image_alt_description || service.title}
+                        <Image
+                          src={service.thumbnail_image}
+                          alt={
+                            service.thumbnail_image_alt_description ||
+                            service.title
+                          }
                           fill
                           className="object-cover"
                         />
@@ -64,21 +68,35 @@ const ServicesSection = () => {
                         <FileCheck className="w-6 h-6 text-primary" />
                       )}
                     </div>
-                    <CardTitle className="text-lg line-clamp-1" title={service.title}>{service.title}</CardTitle>
+                    <CardTitle
+                      className="text-lg line-clamp-1 group-hover:text-primary transition-colors"
+                      title={service.title}
+                    >
+                      {service.title}
+                    </CardTitle>
                   </CardHeader>
                   <CardContent>
                     <CardDescription className="text-sm">
                       {truncateText(stripHtml(service.description), 100)}
                     </CardDescription>
+                    <div className="flex items-center gap-1 text-primary text-sm font-medium mt-4 group-hover:gap-2 transition-all">
+                      Learn More <ArrowRight className="w-4 h-4" />
+                    </div>
                   </CardContent>
                 </Card>
               </Link>
             ))}
           </div>
         )}
+
+        <div className="text-center mt-12">
+          <Link href="/services">
+            <Button variant="outline" size="lg">
+              View All Services
+            </Button>
+          </Link>
+        </div>
       </div>
     </section>
   );
 };
-
-export default ServicesSection;
