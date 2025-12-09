@@ -5,7 +5,6 @@ import {
   PaginatedContacts,
   ContactFilters,
 } from "@/types/contact";
-import { toast } from "sonner";
 
 export const useGetContacts = (filters: ContactFilters = {}) => {
   return useQuery<PaginatedContacts>({
@@ -25,14 +24,6 @@ export const useSubmitContactForm = () => {
       };
 
       return contactAPI.createContact(contactData);
-    },
-    onSuccess: () => {
-      toast.success("Contact form submitted successfully");
-      console.log("Contact form submitted successfully");
-    },
-    onError: error => {
-      toast.error("Failed to submit contact form");
-      console.error("Failed to submit contact form:", error);
     },
   });
 };

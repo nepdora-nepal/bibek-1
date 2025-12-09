@@ -14,6 +14,7 @@ import { useSubmitContactForm } from "@/hooks/use-contact";
 import { ContactFormData } from "@/types/contact";
 import { motion } from "motion/react";
 import Image from "next/image";
+import { toast } from "sonner";
 
 interface ContactDialogProps {
   children?: React.ReactNode;
@@ -64,6 +65,14 @@ export const ContactDialog = ({ children, triggerText = "Contact Us" }: ContactD
       onSuccess: () => {
         form.reset();
         setOpen(false);
+        toast.success("Message sent successfully!", {
+          description: "We'll get back to you as soon as possible.",
+        });
+      },
+      onError: () => {
+        toast.error("Failed to send message", {
+          description: "Please try again later.",
+        });
       },
     });
   };

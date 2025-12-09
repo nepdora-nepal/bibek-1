@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import InquiryModal from "@/components/InquiryModal";
+
 import { 
   GraduationCap, DollarSign, Briefcase, Clock, 
   CheckCircle, ArrowRight, Globe, Award,
@@ -492,7 +492,7 @@ const CountryPage = () => {
     <>
       {/* Hero Section */}
       <motion.section 
-        className="relative h-[60vh] min-h-[600px] overflow-hidden"
+        className="relative h-[50vh] min-h-[400px] sm:min-h-[500px] md:min-h-[600px] overflow-hidden"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.3 }}
@@ -507,25 +507,22 @@ const CountryPage = () => {
         />
         <div className="absolute inset-0 bg-linear-to-t from-foreground via-foreground/60 to-foreground/20" />
         <div className="absolute inset-0 flex items-end">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 pb-16 w-full">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 pb-8 sm:pb-12 md:pb-16 w-full">
             <span className="inline-block bg-primary text-primary-foreground px-4 py-1 text-sm font-medium mb-4">
               Study Destination
             </span>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary-foreground mb-4">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-primary-foreground mb-2 sm:mb-4">
               Study in {data.name}
             </h1>
-            <p className="text-xl text-primary-foreground/90 max-w-2xl mb-6">
+            <p className="text-base sm:text-lg md:text-xl text-primary-foreground/90 max-w-2xl mb-4 sm:mb-6">
               {data.tagline}
             </p>
-            <div className="flex flex-wrap gap-4">
-              <InquiryModal 
-                country={country}
-                trigger={
-                  <Button size="lg">
-                    Apply Now <ArrowRight className="ml-2 w-4 h-4" />
-                  </Button>
-                }
-              />
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+              <ContactDialog>
+                <Button size="lg">
+                  Apply Now <ArrowRight className="ml-2 w-4 h-4" />
+                </Button>
+              </ContactDialog>
               <Button asChild size="lg" variant="outline">
                 <a href="#universities">View Universities</a>
               </Button>
@@ -543,11 +540,11 @@ const CountryPage = () => {
         variants={fadeInUp}
       >
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 text-center">
             {data.facts.map((fact, index) => (
               <div key={index}>
-                <div className="text-2xl md:text-3xl font-bold">{fact.value}</div>
-                <div className="text-sm opacity-80">{fact.label}</div>
+                <div className="text-xl sm:text-2xl md:text-3xl font-bold">{fact.value}</div>
+                <div className="text-xs sm:text-sm opacity-80">{fact.label}</div>
               </div>
             ))}
           </div>
@@ -556,19 +553,19 @@ const CountryPage = () => {
 
       {/* About Section */}
       <motion.section 
-        className="py-16 md:py-20 bg-background"
+        className="py-10 sm:py-16 md:py-20 bg-background"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.3 }}
         variants={fadeInUp}
       >
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             <div>
               <span className="text-sm font-semibold text-primary uppercase tracking-wider mb-2 inline-block">
                 Overview
               </span>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">Why Study in {data.name}?</h2>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-6">Why Study in {data.name}?</h2>
               <p className="text-muted-foreground mb-4">{data.description}</p>
               <p className="text-muted-foreground mb-6">{data.extendedDescription}</p>
               <ContactDialog triggerText="Get Free Consultation">
@@ -577,16 +574,16 @@ const CountryPage = () => {
                 </Button>
               </ContactDialog>
             </div>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               {data.whyStudy.map((item, index) => (
                 <Card key={index} className="hover:border-primary transition-colors">
-                  <CardHeader>
+                  <CardHeader className="p-4 sm:p-6 pb-2 sm:pb-3">
                     <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center mb-2">
                       <item.icon className="w-5 h-5 text-primary" />
                     </div>
                     <CardTitle className="text-base">{item.title}</CardTitle>
                   </CardHeader>
-                  <CardContent>
+                  <CardContent className="p-4 sm:p-6 pt-0">
                     <p className="text-sm text-muted-foreground">{item.description}</p>
                   </CardContent>
                 </Card>
@@ -599,7 +596,7 @@ const CountryPage = () => {
       {/* Universities Section */}
       <motion.section 
         id="universities" 
-        className="py-16 md:py-20"
+        className="py-10 sm:py-16 md:py-20"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.3 }}
@@ -607,16 +604,16 @@ const CountryPage = () => {
       >
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
               Top Universities in {data.name}
             </h2>
           </div>
           <div className="grid md:grid-cols-2 gap-4">
             {data.universities.map((uni, index) => (
               <Card key={index} className="hover:border-primary transition-colors">
-                <CardContent className="flex items-center justify-between p-5">
+                <CardContent className="flex items-center justify-between p-4 sm:p-5">
                   <div>
-                    <span className="font-bold text-lg">{uni.name}</span>
+                    <span className="font-bold text-base sm:text-lg">{uni.name}</span>
                     <div className="flex items-center gap-2 mt-1">
                       <MapPin className="w-3 h-3 text-muted-foreground" />
                       <span className="text-sm text-muted-foreground">{uni.location}</span>
@@ -634,29 +631,95 @@ const CountryPage = () => {
 
       {/* Main Content Grid */}
       <motion.section 
-        className="py-16 md:py-20"
+        className="py-10 sm:py-16 md:py-20"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.3 }}
         variants={fadeInUp}
       >
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <div className="grid lg:grid-cols-3 gap-8">
-            {/* Requirements */}
-            <div className="lg:col-span-2 space-y-8">
+          {/* Use flex-col-reverse on mobile so main content shows first when scrolling */}
+          <div className="flex flex-col-reverse lg:grid lg:grid-cols-3 gap-6 sm:gap-8">
+            {/* Sidebar - Shows at bottom on mobile (but user scrolls past main content first), on the right on desktop */}
+            <div className="lg:col-span-1 w-full">
+              <div className="lg:sticky lg:top-24 space-y-4">
+                <Card>
+                  <CardHeader className="pb-3">
+                    <CardTitle className="text-lg">Quick Information</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-3 sm:space-y-4">
+                    <div className="flex items-start gap-3">
+                      <DollarSign className="w-5 h-5 shrink-0 text-primary opacity-80" />
+                      <div className="w-full min-w-0">
+                        <p className="font-medium text-xs sm:text-sm opacity-80">Tuition Fees</p>
+                        <p className="text-xs sm:text-sm break-words">{data.costs.tuition}</p>
+                      </div>
+                    </div>
+                    <Separator />
+                    <div className="flex items-start gap-3">
+                      <Globe className="w-5 h-5 shrink-0 text-primary opacity-80" />
+                      <div className="w-full min-w-0">
+                        <p className="font-medium text-xs sm:text-sm opacity-80">Living Costs</p>
+                        <p className="text-xs sm:text-sm break-words">{data.costs.living}</p>
+                      </div>
+                    </div>
+                    <Separator />
+                    <div className="flex items-start gap-3">
+                      <Calendar className="w-5 h-5 shrink-0 text-primary opacity-80" />
+                      <div className="w-full min-w-0">
+                        <p className="font-medium text-xs sm:text-sm opacity-80">Intakes</p>
+                        <p className="text-xs sm:text-sm break-words">{data.intakes.join(" • ")}</p>
+                      </div>
+                    </div>
+                    <Separator />
+                    <div className="flex items-start gap-3">
+                      <DollarSign className="w-5 h-5 shrink-0 text-primary opacity-80" />
+                      <div className="min-w-0">
+                        <p className="font-medium text-xs sm:text-sm opacity-80">Total Annual Cost</p>
+                        <p className="font-bold text-sm sm:text-base break-words">{data.costs.total}</p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader className="pb-3">
+                    <CardTitle className="text-center text-base sm:text-lg">Ready to Apply?</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-3 sm:space-y-4">
+                    <ContactDialog>
+                      <Button className="w-full" size="lg">
+                        Apply Now <ArrowRight className="ml-2 w-4 h-4" />
+                      </Button>
+                    </ContactDialog>
+                    <Button variant="outline" className="w-full" size="lg" asChild>
+                      <a href="tel:+977-1-XXXXXXX">
+                        <Phone className="mr-2 w-4 h-4" /> Call Us
+                      </a>
+                    </Button>
+                    <p className="text-xs text-center text-muted-foreground">
+                      Free consultation • No commitment
+                    </p>
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
+
+            {/* Main Content - Shows first when scrolling on mobile, on the left on desktop */}
+            <div className="lg:col-span-2 space-y-4 sm:space-y-6 w-full">
               <Card>
-                <CardHeader>
-                  <CardTitle className="text-2xl flex items-center gap-2">
-                    <GraduationCap className="w-6 h-6 text-primary" />
+                <CardHeader className="pb-3 sm:pb-4">
+                  <CardTitle className="text-lg sm:text-xl md:text-2xl flex items-center gap-2">
+                    <GraduationCap className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
                     Entry Requirements
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="grid sm:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                     {data.requirements.map((req, index) => (
-                      <div key={index} className="flex items-start gap-3">
-                        <CheckCircle className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-                        <span>{req}</span>
+                      <div key={index} className="flex items-start gap-2 sm:gap-3">
+                        <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-primary shrink-0 mt-0.5" />
+                        <span className="text-xs sm:text-sm md:text-base">{req}</span>
                       </div>
                     ))}
                   </div>
@@ -665,19 +728,19 @@ const CountryPage = () => {
 
               {/* Work Rights */}
               <Card>
-                <CardHeader>
-                  <CardTitle className="text-2xl flex items-center gap-2">
-                    <Briefcase className="w-6 h-6 text-primary" />
+                <CardHeader className="pb-3 sm:pb-4">
+                  <CardTitle className="text-lg sm:text-xl md:text-2xl flex items-center gap-2">
+                    <Briefcase className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
                     Work Rights & Opportunities
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-muted-foreground mb-4">{data.workRights}</p>
-                  <div className="grid sm:grid-cols-2 gap-3">
+                  <p className="text-muted-foreground mb-3 sm:mb-4 text-xs sm:text-sm md:text-base">{data.workRights}</p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
                     {data.workRightsDetails.map((detail, index) => (
-                      <div key={index} className="flex items-start gap-2 p-3 border rounded-lg border-border">
-                        <CheckCircle className="w-4 h-4 text-primary shrink-0 mt-0.5" />
-                        <span className="text-sm">{detail}</span>
+                      <div key={index} className="flex items-start gap-2 p-2 sm:p-3 border rounded-lg border-border">
+                        <CheckCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-primary shrink-0 mt-0.5" />
+                        <span className="text-xs sm:text-sm">{detail}</span>
                       </div>
                     ))}
                   </div>
@@ -686,19 +749,19 @@ const CountryPage = () => {
 
               {/* Visa Information */}
               <Card>
-                <CardHeader>
-                  <CardTitle className="text-2xl flex items-center gap-2">
-                    <Plane className="w-6 h-6 text-primary" />
+                <CardHeader className="pb-3 sm:pb-4">
+                  <CardTitle className="text-lg sm:text-xl md:text-2xl flex items-center gap-2">
+                    <Plane className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
                     Visa Information
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-muted-foreground mb-4">{data.visaInfo}</p>
-                  <div className="grid sm:grid-cols-2 gap-3">
+                  <p className="text-muted-foreground mb-3 sm:mb-4 text-xs sm:text-sm md:text-base">{data.visaInfo}</p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
                     {data.visaDetails.map((detail, index) => (
-                      <div key={index} className="flex items-start gap-2 p-3 border rounded-lg border-border">
-                        <CheckCircle className="w-4 h-4 text-primary shrink-0 mt-0.5" />
-                        <span className="text-sm">{detail}</span>
+                      <div key={index} className="flex items-start gap-2 p-2 sm:p-3 border rounded-lg border-border">
+                        <CheckCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-primary shrink-0 mt-0.5" />
+                        <span className="text-xs sm:text-sm">{detail}</span>
                       </div>
                     ))}
                   </div>
@@ -707,133 +770,23 @@ const CountryPage = () => {
 
               {/* Scholarships */}
               <Card>
-                <CardHeader>
-                  <CardTitle className="text-2xl flex items-center gap-2">
-                    <Star className="w-6 h-6 text-primary" />
+                <CardHeader className="pb-3 sm:pb-4">
+                  <CardTitle className="text-lg sm:text-xl md:text-2xl flex items-center gap-2">
+                    <Star className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
                     Scholarships Available
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="grid sm:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                     {data.scholarships.map((scholarship, index) => (
-                      <div key={index} className="border rounded-lg border-border p-4">
-                        <h3 className="font-bold mb-1">{scholarship.name}</h3>
-                        <span className="text-sm text-primary font-medium">{scholarship.amount}</span>
+                      <div key={index} className="border rounded-lg border-border p-3 sm:p-4">
+                        <h3 className="font-bold text-sm sm:text-base mb-1">{scholarship.name}</h3>
+                        <span className="text-xs sm:text-sm text-primary font-medium">{scholarship.amount}</span>
                       </div>
                     ))}
                   </div>
                 </CardContent>
               </Card>
-            </div>
-
-            {/* Sidebar */}
-            <div className="lg:col-span-1">
-              <div className="space-y-6">
-                {/* Popular Courses - Not Sticky */}
-                {/* <Card>
-                  <CardHeader>
-                    <CardTitle className="text-lg flex items-center gap-2">
-                      <Award className="w-5 h-5 text-primary" />
-                      Popular Courses
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="flex flex-wrap gap-2">
-                      {data.popularCourses.map((course, index) => (
-                          <Badge key={index} variant="outline">
-                            {course}
-                          </Badge>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card> */}
-
-                {/* Student Life - Not Sticky */}
-                {/* <Card>
-                  <CardHeader>
-                    <CardTitle className="text-lg flex items-center gap-2">
-                      <Heart className="w-5 h-5 text-primary" />
-                      Student Life
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <ul className="space-y-3">
-                      {data.studentLife.map((item, index) => (
-                        <li key={index} className="flex items-start gap-2 text-sm">
-                          <CheckCircle className="w-4 h-4 text-primary shrink-0 mt-0.5" />
-                          <span>{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card> */}
-
-                {/* Sticky CTA Card */}
-                <div className="sticky top-24 space-y-4">
-                  <Card>
-                    <CardHeader>
-                      <CardTitle className="text-lg">Quick Information</CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      <div className="flex items-start gap-3">
-                        <DollarSign className="w-5 h-5 shrink-0 text-primary opacity-80" />
-                        <div className="w-full">
-                          <p className="font-medium text-sm opacity-80">Tuition Fees</p>
-                          <p className="text-sm">{data.costs.tuition}</p>
-                        </div>
-                      </div>
-                      <Separator />
-                      <div className="flex items-start gap-3">
-                        <Globe className="w-5 h-5 shrink-0 text-primary opacity-80" />
-                        <div className="w-full">
-                          <p className="font-medium text-sm opacity-80">Living Costs</p>
-                          <p className="text-sm">{data.costs.living}</p>
-                        </div>
-                      </div>
-                      <Separator />
-                      <div className="flex items-start gap-3">
-                        <Calendar className="w-5 h-5 shrink-0 text-primary opacity-80" />
-                        <div className="w-full">
-                          <p className="font-medium text-sm opacity-80">Intakes</p>
-                          <p className="text-sm">{data.intakes.join(" • ")}</p>
-                        </div>
-                      </div>
-                      <Separator />
-                      <div className="flex items-start gap-3">
-                        <DollarSign className="w-5 h-5 shrink-0 text-primary opacity-80" />
-                        <div>
-                          <p className="font-medium text-sm opacity-80">Total Annual Cost</p>
-                          <p className="font-bold">{data.costs.total}</p>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-
-                  <Card>
-                    <CardHeader>
-                      <CardTitle className="text-center">Ready to Apply?</CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      <InquiryModal 
-                        country={country}
-                        trigger={
-                          <Button className="w-full">
-                            Apply Now <ArrowRight className="ml-2 w-4 h-4" />
-                          </Button>
-                        }
-                      />
-                      <Button variant="outline" className="w-full" asChild>
-                        <a href="tel:+977-1-XXXXXXX">
-                          <Phone className="mr-2 w-4 h-4" /> Call Us
-                        </a>
-                      </Button>
-                      <p className="text-xs text-center text-muted-foreground">
-                        Free consultation • No commitment
-                      </p>
-                    </CardContent>
-                  </Card>
-                </div>
-              </div>
             </div>
           </div>
         </div>
