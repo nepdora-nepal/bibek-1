@@ -5,6 +5,8 @@ import { Phone, MapPin, Send } from "lucide-react";
 import { useSubmitContactForm } from "@/hooks/use-contact";
 import { ContactFormData } from "@/types/contact";
 import { motion, Variants } from "motion/react";
+import { toast } from "sonner";
+import { Input } from "@/components/ui/input";
 
 const fadeInUp: Variants = {
   hidden: { opacity: 0, y: 30 },
@@ -38,6 +40,7 @@ const Contact = () => {
 
     submitContact(submissionData, {
       onSuccess: () => {
+        toast.success("Message sent successfully");
         form.reset();
       },
     });
@@ -68,58 +71,50 @@ const Contact = () => {
             {/* NAME FIELDS */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="relative">
-                <input
+                <Input
                   type="text"
                   name="firstName"
                   required
                   placeholder=" "
+                  label="First Name *"
                   className="peer w-full px-3 sm:px-4 pt-5 sm:pt-6 pb-2 text-sm sm:text-base border-2 border-border rounded-lg bg-background focus:border-primary outline-none transition"
                 />
-                <label className="absolute left-3 sm:left-4 top-4 text-muted-foreground text-xs sm:text-sm transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-sm sm:peer-placeholder-shown:text-base peer-focus:top-2 peer-focus:text-xs peer-focus:text-primary">
-                  First Name *
-                </label>
               </div>
 
               <div className="relative">
-                <input
+                <Input
                   type="text"
                   name="lastName"
                   required
                   placeholder=" "
+                  label="Last Name *"
                   className="peer w-full px-3 sm:px-4 pt-5 sm:pt-6 pb-2 text-sm sm:text-base border-2 border-border rounded-lg bg-background focus:border-primary outline-none transition"
-                />
-                <label className="absolute left-3 sm:left-4 top-4 text-muted-foreground text-xs sm:text-sm transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-sm sm:peer-placeholder-shown:text-base peer-focus:top-2 peer-focus:text-xs peer-focus:text-primary">
-                  Last Name *
-                </label>
+                />  
               </div>
             </div>
 
             {/* EMAIL */}
             <div className="relative">
-              <input
+              <Input
                 type="email"
                 name="email"
                 required
                 placeholder=" "
+                label="Email Address *"
                 className="peer w-full px-3 sm:px-4 pt-5 sm:pt-6 pb-2 text-sm sm:text-base border-2 border-border rounded-lg bg-background focus:border-primary outline-none transition"
               />
-              <label className="absolute left-3 sm:left-4 top-4 text-muted-foreground text-xs sm:text-sm transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-sm sm:peer-placeholder-shown:text-base peer-focus:top-2 peer-focus:text-xs peer-focus:text-primary">
-                Email Address *
-              </label>
             </div>
 
             {/* PHONE */}
             <div className="relative">
-              <input
+              <Input
                 type="tel"
                 name="phone"
                 required
+                label="Phone Number *"
                 placeholder=" "
                 className="peer w-full px-3 sm:px-4 pt-5 sm:pt-6 pb-2 text-sm sm:text-base border-2 border-border rounded-lg bg-background focus:border-primary outline-none transition"
               />
-              <label className="absolute left-3 sm:left-4 top-4 text-muted-foreground text-xs sm:text-sm transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-sm sm:peer-placeholder-shown:text-base peer-focus:top-2 peer-focus:text-xs peer-focus:text-primary">
-                Phone Number *
-              </label>
             </div>
 
             {/* MESSAGE */}
@@ -127,7 +122,6 @@ const Contact = () => {
               <textarea
                 name="message"
                 rows={3}
-                placeholder=" "
                 className="peer w-full px-3 sm:px-4 pt-5 sm:pt-6 pb-2 text-sm sm:text-base border-2 border-border rounded-lg bg-background resize-none focus:border-primary outline-none transition"
               />
               <label className="absolute left-3 sm:left-4 top-4 text-muted-foreground text-xs sm:text-sm transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-sm sm:peer-placeholder-shown:text-base peer-focus:top-2 peer-focus:text-xs peer-focus:text-primary">

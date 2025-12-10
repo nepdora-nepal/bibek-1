@@ -15,6 +15,7 @@ import { ContactFormData } from "@/types/contact";
 import { motion } from "motion/react";
 import Image from "next/image";
 import { toast } from "sonner";
+import { Input } from "@/components/ui/input";
 
 interface ContactDialogProps {
   children?: React.ReactNode;
@@ -116,44 +117,35 @@ export const ContactDialog = ({ children, triggerText = "Contact Us", title = "B
             >
               {/* NAME FIELDS */}
               <motion.div className="relative" variants={itemVariants}>
-                <input
+                <Input
                   type="text"
                   name="fullName"
                   required
+                  label="Full Name *"
                   placeholder=" "
-                  className="peer w-full px-3 sm:px-4 pt-5 pb-2 text-sm sm:text-base border border-slate-200 rounded-xl bg-slate-50 focus:bg-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all duration-200"
                 />
-                <label className="absolute left-3 sm:left-4 top-4 text-slate-400 text-xs sm:text-sm transition-all duration-200 peer-placeholder-shown:top-4 peer-placeholder-shown:text-sm sm:peer-placeholder-shown:text-base peer-focus:top-2 peer-focus:text-xs peer-focus:text-primary font-medium pointer-events-none">
-                  Full Name *
-                </label>
               </motion.div>
 
               {/* EMAIL */}
               <motion.div className="relative" variants={itemVariants}>
-                <input
+                <Input
                   type="email"
                   name="email"
                   required
+                  label="Email Address *"
                   placeholder=" "
-                  className="peer w-full px-3 sm:px-4 pt-5 pb-2 text-sm sm:text-base border border-slate-200 rounded-xl bg-slate-50 focus:bg-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all duration-200"
                 />
-                <label className="absolute left-3 sm:left-4 top-4 text-slate-400 text-xs sm:text-sm transition-all duration-200 peer-placeholder-shown:top-4 peer-placeholder-shown:text-sm sm:peer-placeholder-shown:text-base peer-focus:top-2 peer-focus:text-xs peer-focus:text-primary font-medium pointer-events-none">
-                  Email Address *
-                </label>
               </motion.div>
 
               {/* PHONE */}
               <motion.div className="relative" variants={itemVariants}>
-                <input
+                <Input
                   type="tel"
                   name="phone"
                   required
+                  label="Phone Number *"
                   placeholder=" "
-                  className="peer w-full px-3 sm:px-4 pt-5 pb-2 text-sm sm:text-base border border-slate-200 rounded-xl bg-slate-50 focus:bg-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all duration-200"
                 />
-                <label className="absolute left-3 sm:left-4 top-4 text-slate-400 text-xs sm:text-sm transition-all duration-200 peer-placeholder-shown:top-4 peer-placeholder-shown:text-sm sm:peer-placeholder-shown:text-base peer-focus:top-2 peer-focus:text-xs peer-focus:text-primary font-medium pointer-events-none">
-                  Phone Number *
-                </label>
               </motion.div>
 
               {/* MESSAGE */}
@@ -161,12 +153,9 @@ export const ContactDialog = ({ children, triggerText = "Contact Us", title = "B
                 <textarea
                   name="message"
                   rows={3}
-                  placeholder=" "
+                  placeholder="Tell us about your goals"
                   className="peer w-full px-3 sm:px-4 pt-5 pb-2 text-sm sm:text-base border border-slate-200 rounded-xl bg-slate-50 focus:bg-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all duration-200 resize-none"
                 />
-                <label className="absolute left-3 sm:left-4 top-4 text-slate-400 text-xs sm:text-sm transition-all duration-200 peer-placeholder-shown:top-4 peer-placeholder-shown:text-sm sm:peer-placeholder-shown:text-base peer-focus:top-2 peer-focus:text-xs peer-focus:text-primary font-medium pointer-events-none">
-                  Tell us about your goals
-                </label>
               </motion.div>
 
               <motion.div className="flex gap-3 sm:gap-4 pt-2 sm:pt-4" variants={itemVariants}>
