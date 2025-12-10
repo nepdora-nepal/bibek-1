@@ -58,7 +58,7 @@ const BlogSection = () => {
           <>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {blogs.map((blog) => (
-                <Link href={`/blog/${blog.slug}`} key={blog.id}>
+                <Link href={`/latest-updates/${blog.slug}`} key={blog.id}>
                   <Card className="h-full overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1 cursor-pointer group">
                     <div className="relative w-full h-48 overflow-hidden">
                       {blog.thumbnail_image ? (
