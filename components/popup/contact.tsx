@@ -12,7 +12,7 @@ import {
 import { Send } from "lucide-react";
 import { useSubmitContactForm } from "@/hooks/use-contact";
 import { ContactFormData } from "@/types/contact";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import { toast } from "sonner";
 import { Input } from "@/components/ui/input";

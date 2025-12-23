@@ -11,7 +11,7 @@ import Image from "next/image";
 import { useTeamMembers } from "@/hooks/use-team-member";
 import { Skeleton } from "@/components/ui/skeleton";
 import { stripHtml, truncateText } from "@/lib/text-utils";
-import { motion, Variants } from "motion/react";
+import { motion, Variants } from "framer-motion";
 import CTASection from "../home/CTASection";
 import { ContactDialog } from "@/components/popup/contact";
 

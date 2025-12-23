@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Phone, MapPin, Send } from "lucide-react";
 import { useSubmitContactForm } from "@/hooks/use-contact";
 import { ContactFormData } from "@/types/contact";
-import { motion, Variants } from "motion/react";
+import { motion, Variants } from "framer-motion";
 import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
 

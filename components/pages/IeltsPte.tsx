@@ -5,7 +5,7 @@ import {
 } from "lucide-react";
 import ieltsImage from "@/components/assets/ielts-class.jpg";
 import Image from "next/image";
-import { motion, Variants } from "motion/react";
+import { motion, Variants } from "framer-motion";
 import { ContactDialog } from "@/components/popup/contact";
 
 const fadeInUp: Variants = {

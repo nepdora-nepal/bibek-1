@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import Image from "next/image";
 import { truncateText, stripHtml } from "@/lib/text-utils";
-import { motion, Variants } from "motion/react";
+import { motion, Variants } from "framer-motion";
 
 const fadeInUp: Variants = {
   hidden: { opacity: 0, y: 30 },

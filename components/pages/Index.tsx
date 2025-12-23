@@ -9,7 +9,7 @@ import ServicesSection from "@/components/home/ServicesSection";
 import TestimonialsSection from "@/components/home/TestimonialsSection";
 import Videos from "@/components/home/videos/videos";
 import CTASection from "@/components/home/CTASection";
-import { motion, Variants } from "motion/react";
+import { motion, Variants } from "framer-motion";
 import BlogSection from "../home/blog-section";
 import TeamSection from "../home/team-section";
 

@@ -6,7 +6,7 @@ import { useBlogs } from "@/hooks/use-blog";
 import { Calendar, Clock, ArrowRight } from "lucide-react";
 import { format } from "date-fns";
 import { Skeleton } from "@/components/ui/skeleton";
-import { motion, Variants } from "motion/react";
+import { motion, Variants } from "framer-motion";
 
 import CTASection from "../home/CTASection";
 

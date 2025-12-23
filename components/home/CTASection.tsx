@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Phone} from "lucide-react";
-import { motion, Variants } from "motion/react";
+import { motion, Variants } from "framer-motion";
 import Image from "next/image";
 import { ContactDialog } from "@/components/popup/contact";
 

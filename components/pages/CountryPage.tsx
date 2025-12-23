@@ -22,7 +22,7 @@ import {
 
 import Image, { StaticImageData } from "next/image";
 
-import { motion, Variants } from "motion/react";
+import { motion, Variants } from "framer-motion";
 import CTASection from "../home/CTASection";
 import { ContactDialog } from "@/components/popup/contact";
 
