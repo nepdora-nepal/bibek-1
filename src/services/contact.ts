@@ -10,7 +10,7 @@ export const contactAPI = {
   getContacts: async (
     filters: ContactFilters = {}
   ): Promise<PaginatedContacts> => {
-    const BASE_API_URL = siteConfig.backendUrl;
+    const BASE_API_URL = siteConfig.apiBaseUrl;
 
     const { page = 1, page_size = 10, search } = filters;
 
@@ -36,7 +36,7 @@ export const contactAPI = {
   },
 
   createContact: async (contactData: ContactFormData): Promise<Contact> => {
-    const BASE_API_URL = siteConfig.backendUrl;
+    const BASE_API_URL = siteConfig.apiBaseUrl;
     const response = await fetch(`${BASE_API_URL}/api/contact/`, {
       method: "POST",
       headers: {

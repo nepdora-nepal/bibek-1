@@ -6,7 +6,7 @@ import { TeamMember } from "@/src/types/team";
 export const teamAPI = {
   getTeamMembers: async (): Promise<TeamMember[]> => {
     try {
-      const BASE_API_URL = siteConfig.backendUrl;
+      const BASE_API_URL = siteConfig.apiBaseUrl;
       const url = new URL(`${BASE_API_URL}/api/team-member/`);
 
       const response = await fetch(url.toString(), {

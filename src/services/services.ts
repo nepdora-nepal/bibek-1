@@ -33,7 +33,7 @@ export const servicesApi = {
   getServices: async (
     filters?: ServicesFilters
   ): Promise<PaginatedServicesResponse> => {
-    const API_BASE_URL = siteConfig.backendUrl;
+    const API_BASE_URL = siteConfig.apiBaseUrl;
     const queryParams = new URLSearchParams();
 
     if (filters) {
@@ -53,7 +53,7 @@ export const servicesApi = {
   },
 
   getServiceBySlug: async (slug: string): Promise<ServicesPost> => {
-    const API_BASE_URL = siteConfig.backendUrl;
+    const API_BASE_URL = siteConfig.apiBaseUrl;
     const response = await fetch(`${API_BASE_URL}/api/service/${slug}/`, {
       method: "GET",
     });

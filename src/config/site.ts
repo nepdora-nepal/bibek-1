@@ -1,3 +1,12 @@
 export const siteConfig = {
-    backendUrl: process.env.NEXT_PUBLIC_BACKEND_URL,   
-}
+  name: "Nepdora",
+  description: "Nepdora Preview System",
+  tenantName: "brainstorm-global-education",
+  get apiBaseUrl() {
+    return `https://${this.tenantName}.nepdora.baliyoventures.com`;
+  },
+};
+
+export const getApiBaseUrl = (): string => {
+  return siteConfig.apiBaseUrl;
+};

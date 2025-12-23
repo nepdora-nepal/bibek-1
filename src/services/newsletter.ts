@@ -6,7 +6,7 @@ import {
 } from "@/src/types/newsletter";
 import { siteConfig } from "@/src/config/site";
 
-const API_BASE_URL = siteConfig.backendUrl;
+const API_BASE_URL = siteConfig.apiBaseUrl;
 
 export const createNewsletter = async (
   newsletterData: CreateNewsletterRequest

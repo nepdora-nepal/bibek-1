@@ -6,7 +6,7 @@ import {
 export const videosAPI = {
   // Get all videos
   getVideos: async (): Promise<Videos> => {
-    const BASE_API_URL = siteConfig.backendUrl;
+    const BASE_API_URL = siteConfig.apiBaseUrl;
     const url = new URL(`${BASE_API_URL}/api/videos/`);
 
     const response = await fetch(url.toString(), {

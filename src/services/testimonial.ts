@@ -1,9 +1,10 @@
 import {  TestimonialResponse } from "@/src/types/testimonial";
+import { siteConfig } from "@/src/config/site";
 
 export const testimonialsApi = {
   // Get all testimonials
   getAll: async (): Promise<TestimonialResponse> => {
-    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+    const backendUrl = siteConfig.apiBaseUrl;
     
     if (!backendUrl) {
       throw new Error('Backend URL not configured');

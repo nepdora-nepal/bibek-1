@@ -1,7 +1,7 @@
 import { siteConfig } from "@/src/config/site";
 import { BlogFilters, BlogPost, PaginatedBlogResponse } from "@/src/types/blog";
 
-const API_BASE_URL=siteConfig.backendUrl
+const API_BASE_URL=siteConfig.apiBaseUrl
 
 export const blogApi = {
   getBlogs: async (filters?: BlogFilters): Promise<PaginatedBlogResponse> => {
