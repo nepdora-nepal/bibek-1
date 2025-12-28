@@ -8,6 +8,15 @@ export const siteConfig = {
   get mediaBaseUrl() {
     return process.env.NEXT_PUBLIC_MEDIA_URL || `https://nepdora.baliyoventures.com/media/workspaces/${this.tenantName}/public`;
   },
+  get endpoints() {
+    const apiBase = this.apiBaseUrl;
+    return {
+      fetchImage: (path: string) => `${this.mediaBaseUrl}/${path.startsWith("/") ? path.slice(1) : path}`,
+      listImages: () => `${apiBase}/builder/images-map/${this.tenantName}/`,
+      updateImageMap: () => `${apiBase}/builder/update-image-map/${this.tenantName}/`,
+      uploadImage: () => `${apiBase}/builder/upload-image/${this.tenantName}/`,
+    };
+  },
 };
 
 export const getApiBaseUrl = (): string => {
@@ -21,3 +30,4 @@ export const getImageUrl = (path: string): string => {
   const baseUrl = siteConfig.mediaBaseUrl;
   return `${baseUrl}${path.startsWith("/") ? path : `/${path}`}`;
 };
+
